@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Journey</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* /css/styles.css */
+        :root {
+            /* Jumanji Color Palette */
+            --dark-brown: #6B4423; /* Darker, richer brown */
+            --ochre-gold: #B8860B; /* DarkGoldenrod - less bright gold */
+            --jungle-green: #556B2F; /* DarkOliveGreen - muted green */
+            --parchment-beige: #F5F5DC; /* Beige - paper/board color */
+            --muted-red: #8B0000; /* DarkRed - for accents */
+            --light-blue: #ADD8E6; /* Light blue for safe square modals */
+            --border-radius: 8px;
+            --title-font: 'Cinzel Decorative', cursive;
+            --body-font: 'Merriweather', serif;
+        }
+
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--body-font);
+            background-color: var(--parchment-beige);
+            /* Wood grain texture - more subtle */
+            background-image: url('/images/fondo.jpg');
+            background-size: cover;
+            /* background-image: linear-gradient(to right, rgba(107, 68, 35, 0.05) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(107, 68, 35, 0.05) 1px, transparent 1px);
+            background-size: 20px 20px; */
+            color: var(--dark-brown);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .header-area {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 0 10px;
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 10px; /* Add gap for wrapped items */
+        }
+
+        .lang-toggle button {
+             background-color: var(--jungle-green);
+             color: var(--parchment-beige);
+             border: 2px solid var(--dark-brown);
+             padding: 8px 12px;
+             font-family: var(--body-font); /* Use body font for clarity */
+             font-size: 0.9em;
+             font-weight: bold;
+             border-radius: var(--border-radius);
+             cursor: pointer;
+             transition: background-color 0.3s ease, transform 0.1s ease;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .lang-toggle button:hover {
+             background-color: #6B8E23; /* OliveDrab */
+        }
+         .lang-toggle button:active {
+             transform: scale(0.95);
+         }
+
+
+        h1, h2, h3 {
+            font-family: var(--title-font);
+            color: var(--jungle-green);
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        h1 { font-size: 2.5em; margin-bottom: 0; width: 100%;} /* Ensure title takes full width initially */
+        h2 { font-size: 1.5em; color: var(--dark-brown); margin-bottom: 15px; width: 100%;}
+
+
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 900px; /* Adjust as needed */
+        }
+
+        .player-setup, .player-info, .dice-area, .victory-message {
+            /*background-color: rgba(245, 245, 220, 0.9); parchment-beige with transparency */
+            background-image: url('/images/pergamino.jpg');
+            background-size: cover;
+            border: 3px solid var(--dark-brown);
+            border-radius: var(--border-radius);
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px; /* Limit width of info panels */
+            text-align: center;
+        }
+
+        .player-setup button {
+            background-color: var(--ochre-gold);
+            color: var(--dark-brown);
+            border: 2px solid var(--dark-brown);
+            padding: 10px 15px;
+            font-family: var(--title-font); /* Title font for buttons */
+            font-size: 1em; /* Adjust size */
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .player-setup button:hover {
+            background-color: #CDAD00; /* Darker Goldenrod */
+        }
+         .player-setup button:active {
+            transform: scale(0.95);
+        }
+
+        .player-info ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        .player-info li {
+            margin-bottom: 5px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px; /* Increased gap */
+        }
+        .player-info .player-token-icon {
+            width: 20px; /* Slightly larger icon */
+            height: 20px;
+            border-radius: 50%;
+            display: inline-block;
+            vertical-align: middle;
+            border: 1px solid var(--dark-brown);
+            flex-shrink: 0; /* Prevent icon shrinking */
+        }
+
+
+        .player-info .active-player {
+            color: var(--jungle-green);
+            border: 2px dashed var(--ochre-gold);
+            padding: 3px 6px; /* More padding */
+            border-radius: 4px;
+            background-color: rgba(184, 134, 11, 0.1); /* Light gold highlight */
+        }
+
+        .board {
+            display: grid;
+            /* Adjust grid columns for responsiveness */
+            grid-template-columns: repeat(auto-fit, minmax(90px, 1fr)); /* Slightly larger squares */
+            gap: 6px;
+            padding: 15px;
+            background-color: var(--jungle-green);
+             /* Simple texture, replace with /assets/images/board_texture.png if available */
+            /* background-image: radial-gradient(rgba(245, 245, 220, 0.1) 1px, transparent 1px); */
+            background-image: url('/images/board-background.jpg');
+            background-size: cover;
+            /* background-size: 15px 15px; */
+            border: 5px solid var(--dark-brown);
+            border-radius: var(--border-radius);
+            width: 100%;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            position: relative; /* Needed for absolute positioning of pieces */
+        }
+
+        .square {
+            aspect-ratio: 1 / 1; /* Keep squares square */
+            /* background-color: var(--parchment-beige); */
+            /* Placeholder for individual square background */
+            background-image: url('/images/board-tile-rem.png');
+            background-size: cover;
+            /* border: 2px solid var(--dark-brown); */
+            border-radius: 4px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            font-size: 0.75em; /* Slightly larger base font */
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            min-height: 90px; /* Minimum height */
+            color: var(--dark-brown); /* Ensure text is readable */
+            font-weight: bold;
+        }
+
+        .square span:first-child { /* Square number */
+            margin-left: 10px;
+            margin-top: 5px;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: var(--dark-brown);
+            opacity: 0.8;
+            align-self: flex-start; /* Number top-left */
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.5);
+        }
+
+        .square span:last-child { /* Square label */
+             font-weight: bold;
+             align-self: center;
+             margin-top: auto;
+             background-color: rgba(245, 245, 220, 0.7); /* Slightly more opaque label background */
+             padding: 2px 4px;
+             border-radius: 3px;
+             max-width: 95%; /* Prevent label overflow */
+        }
+
+
+        .square.start-square, .square.end-square {
+            background-color: var(--ochre-gold); /* Gold for start/end */
+            /* Replace with specific background image if desired */
+            /* background-image: url('/assets/images/start_square.png'); */
+            font-weight: bold;
+        }
+
+        .square.challenge-square {
+            background-color: #90ee9000; /* LightGreen for challenges */
+             border: 2px dashed var(--jungle-green);
+             /* Replace with specific background image if desired */
+             /* background-image: url('/assets/images/challenge_square.png'); */
+        }
+        /* Add subtle indicator for safe squares with content */
+        .square.safe-square-content::after {
+            content: '*';
+            position: absolute;
+            top: 2px;
+            right: 5px;
+            font-size: 1.5em;
+            color: var(--ochre-gold);
+            font-weight: bold;
+        }
+
+
+        /* Player Pieces (now images) */
+        .player-piece {
+            width: 28%; /* Adjust size relative to square */
+            height: 28%;
+            position: absolute;
+            transition: transform 0.5s ease-in-out, left 0.5s ease-in-out, top 0.5s ease-in-out; /* Animate position */
+            z-index: 10;
+            border-radius: 50%; /* Make images circular if needed */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            object-fit: cover; /* Ensure image covers the area */
+            background-color: #ccc; /* Fallback color */
+            border: 1px solid var(--dark-brown);
+        }
+
+        /* Position pieces within the square grid - adjusted for overlap */
+        .player-piece[data-player="0"] { top: 15%; left: 15%; }
+        .player-piece[data-player="1"] { top: 15%; right: 15%; }
+        .player-piece[data-player="2"] { bottom: 15%; left: 15%; }
+        .player-piece[data-player="3"] { bottom: 15%; right: 15%; }
+
+        /* Dice Area */
+        .dice-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .dice {
+            width: 70px; /* Slightly larger dice */
+            height: 70px;
+            perspective: 1200px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .dice-cube {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1s ease-out;
+            transform: rotateX(-15deg) rotateY(-15deg); /* Initial tilt */
+        }
+
+        .dice-cube.rolling {
+            transform: rotateX(1080deg) rotateY(720deg) rotateZ(1080deg); /* More complex roll */
+        }
+
+
+        .dice-face {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background-color: var(--parchment-beige);
+            border: 2px solid var(--dark-brown);
+            background-size: contain; /* Fit dice face image */
+            background-repeat: no-repeat;
+            background-position: center;
+            backface-visibility: hidden;
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            /* Remove text display */
+        }
+
+        /* Set background images for dice faces - REPLACE WITH ACTUAL URLs */
+        .face-1 { transform: rotateY(0deg) translateZ(35px); background-image: url('/images/dice-face-1.jpg'); }
+        .face-2 { transform: rotateY(90deg) translateZ(35px); background-image: url('/images/dice-face-2.jpg'); }
+        .face-3 { transform: rotateX(90deg) translateZ(35px); background-image: url('/images/dice-face-3.jpg'); }
+        .face-4 { transform: rotateX(-90deg) translateZ(35px); background-image: url('/images/dice-face-4.jpg'); }
+        .face-5 { transform: rotateY(-90deg) translateZ(35px); background-image: url('/images/dice-face-5.jpg'); }
+        .face-6 { transform: rotateY(180deg) translateZ(35px); background-image: url('/images/dice-face-6.jpg'); }
+        /* Example using actual paths:
+        .face-1 { background-image: url('/assets/images/dice-1.png'); }
+        ... etc ...
+        */
+
+        #dice-result {
+            font-size: 1.2em;
+            font-weight: bold;
+            min-height: 1.5em; /* Prevent layout shift */
+            color: var(--jungle-green);
+        }
+
+        /* Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.7); /* Darker overlay */
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            /* background-color: var(--parchment-beige); */
+            background-image: url('/images/modal-card.png');
+            background-size: contain; /* Para que cubra todo el modal */
+            background-repeat: no-repeat; /* Para que no se repita */
+            background-position: center; /* Para centrar la imagen */
+            margin: auto;
+            padding: 30px;
+            /* border: 5px solid var(--dark-brown);
+            border-radius: var(--border-radius); */
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+             /* Add a subtle texture or border image if desired */
+             /* border-image: url('/assets/images/modal_border.png') 30 round; */
+             /* background-image: linear-gradient(to right, rgba(107, 68, 35, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(107, 68, 35, 0.03) 1px, transparent 1px);
+            background-size: 15px 15px; */
+        }
+        /* Style modal differently for safe squares */
+        .modal-content.safe-modal {
+            width: 500px;
+            /*border-color: var(--light-blue);  Light blue border for fun squares */
+            /*background-color: #E0F7FA; Lighter blue background */
+        }
+        .modal-content.safe-modal h3 {
+            color: #0277BD; /* Darker blue title */
+        }
+         .modal-content.safe-modal button {
+            background-color: var(--light-blue);
+            color: var(--dark-brown);
+            border-color: #0277BD;
+         }
+         .modal-content.safe-modal button:hover {
+             background-color: #B3E5FC;
+         }
+
+
+        .modal-content h3 {
+            font-family: var(--title-font);
+            color: var(--jungle-green);
+            margin-bottom: 15px;
+            margin-top: 20px;
+            font-size: 1.8em;
+        }
+
+        .modal-content p {
+            margin-bottom: 20px;
+            margin-left: 50px;
+            margin-right: 50px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: var(--dark-brown);
+        }
+
+        .modal-content button {
+            background-color: var(--ochre-gold);
+            color: var(--dark-brown);
+            border: 2px solid var(--dark-brown);
+            padding: 12px 25px;
+            font-family: var(--title-font);
+            font-size: 1.1em; /* Adjust size */
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .modal-content button:hover {
+             background-color: #CDAD00;
+        }
+         .modal-content button:active {
+             transform: scale(0.95);
+         }
+
+         .victory-message {
+            display: none; /* Hidden initially */
+            border-color: var(--ochre-gold);
+            background-color: rgba(245, 245, 220, 0.95); /* Slightly more opaque */
+         }
+         .victory-message h2 {
+             color: var(--ochre-gold);
+             font-size: 2.5em; /* Larger victory text */
+         }
+          .victory-message p {
+             font-size: 1.1em;
+             margin: 10px 0;
+         }
+         .victory-message button {
+             background-color: var(--jungle-green);
+             color: var(--parchment-beige);
+             border-color: var(--dark-brown);
+             margin-top: 15px;
+             font-family: var(--title-font);
+             font-size: 1.1em;
+             padding: 10px 20px;
+         }
+         .victory-message button:hover {
+             background-color: #6B8E23; /* OliveDrab */
+         }
+
+
+        /* Accessibility */
+        .sr-only { /* Screen Reader Only */
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Focus states for keyboard navigation */
+        button:focus, .dice:focus, .modal-content button:focus {
+            outline: 3px solid var(--ochre-gold);
+            outline-offset: 2px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+             h1 { font-size: 2em; }
+             h2 { font-size: 1.3em; }
+             .header-area { justify-content: center;} /* Center items when wrapped */
+             .board {
+                 grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+                 gap: 4px;
+                 padding: 10px;
+             }
+             .square { font-size: 0.7em; min-height: 80px; }
+             .square span:first-child { font-size: 1.2em; }
+             .player-piece { width: 25%; height: 25%; }
+        }
+
+        @media (max-width: 600px) {
+            .board {
+                grid-template-columns: repeat(5, 1fr); /* Adjust grid for smaller screens */
+                gap: 3px;
+            }
+            .square { font-size: 0.65em; min-height: 70px; }
+             .square span:first-child { font-size: 1.1em; }
+             .player-piece { width: 23%; height: 23%; }
+
+            h1 { font-size: 1.8em; }
+            h2 { font-size: 1.2em; }
+            .modal-content { padding: 20px; }
+            .modal-content h3 { font-size: 1.5em; }
+            .modal-content p { font-size: 1em; }
+            .modal-content button { font-size: 1em; padding: 10px 20px;}
+            .dice { width: 60px; height: 60px; }
+            .dice-face { width: 60px; height: 60px; }
+            .face-1 { transform: rotateY(0deg) translateZ(30px); }
+            .face-2 { transform: rotateY(90deg) translateZ(30px); }
+            .face-3 { transform: rotateX(90deg) translateZ(30px); }
+            .face-4 { transform: rotateX(-90deg) translateZ(30px); }
+            .face-5 { transform: rotateY(-90deg) translateZ(30px); }
+            .face-6 { transform: rotateY(180deg) translateZ(30px); }
+        }
+         @media (max-width: 400px) {
+              .board {
+                grid-template-columns: repeat(4, 1fr); /* Further adjust grid */
+             }
+              .square { font-size: 0.6em; min-height: 60px; }
+              .square span:first-child { font-size: 1em; }
+              .player-piece { width: 20%; height: 20%; }
+             .player-setup button { font-size: 0.9em; padding: 8px 12px;}
+             .lang-toggle button { font-size: 0.8em; padding: 6px 10px;}
+         }
+
+    </style>
+</head>
+<body>
+    <div class="header-area">
+        <h1 data-lang-key="gameTitle">Emotional Journey</h1>
+        <div class="lang-toggle">
+            <button id="lang-toggle-button" data-lang-key="toggleLang">Switch to Spanish</button>
+        </div>
+    </div>
+     <h2 data-lang-key="gameSubtitle">Emotional Regulation Adventure</h2>
+
+    <div class="game-container">
+
+        <div id="player-setup" class="player-setup">
+            <h3 data-lang-key="playerSelectTitle">Choose Number of Players</h3>
+            <button data-players="2">2 <span data-lang-key="playersUnit">Players</span></button>
+            <button data-players="3">3 <span data-lang-key="playersUnit">Players</span></button>
+            <button data-players="4">4 <span data-lang-key="playersUnit">Players</span></button>
+        </div>
+
+        <div id="player-info" class="player-info" style="display: none;">
+            <h3 data-lang-key="currentPlayerTitle">Current Turn</h3>
+            <ul id="player-list">
+                </ul>
+        </div>
+
+        <div id="board" class="board" role="grid" aria-label="Game Board">
+            </div>
+
+        <div id="dice-area" class="dice-area" style="display: none;">
+             <div id="dice" class="dice" role="button" tabindex="0" aria-label="Roll the dice">
+                <div class="dice-cube" id="dice-cube">
+                    <div class="dice-face face-1"></div>
+                    <div class="dice-face face-2"></div>
+                    <div class="dice-face face-3"></div>
+                    <div class="dice-face face-4"></div>
+                    <div class="dice-face face-5"></div>
+                    <div class="dice-face face-6"></div>
+                </div>
+            </div>
+            <div id="dice-result" aria-live="polite" data-lang-key="dicePromptInitial">Click the dice to roll!</div>
+        </div>
+
+         <div id="victory-message" class="victory-message">
+            <h2 id="winner-name">Player X Wins!</h2>
+            <p data-lang-key="victoryMessage">Congratulations on completing the Emotional Journey!</p>
+            <button id="play-again-button" data-lang-key="playAgain">Play Again?</button>
+        </div>
+
+    </div>
+
+    <div id="challenge-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal-content" id="modal-box-content">
+            <h3 id="modal-title" data-lang-key="challengeTitleDefault">Challenge!</h3>
+            <p id="modal-content-text">Psychoeducational content goes here.</p>
+            <button id="modal-done-button" data-lang-key="modalDoneButton">Done</button>
+        </div>
+    </div>
+
+    <script type="module">
+        // Simulate /js/data.js
+        const squaresData = [
+             // Added _en and _es for labels and content
+             // Added subtype and content for 'safe' squares
+            { id: 1, type: 'start', label_en: 'Start', label_es: 'Inicio', content_en: 'The journey begins!', content_es: '¡La aventura comienza!' },
+            { id: 2, type: 'safe', subtype: 'joke', label_en: 'Quiet Clearing', label_es: 'Claro Tranquilo', content_en: 'Why don\'t scientists trust atoms? Because they make up everything!', content_es: '¿Qué le dice un techo a otro techo? Techo de menos.' },
+            { id: 3, type: 'challenge', label_en: 'Deep Breath', label_es: 'Respira Hondo', content_en: 'Feeling overwhelmed? Take 3 slow, deep breaths. Inhale through your nose, exhale slowly through your mouth. Notice how your belly rises and falls.', content_es: '¿Te sientes abrumado/a? Haz 3 respiraciones lentas y profundas. Inhala por la nariz, exhala lentamente por la boca. Nota cómo sube y baja tu abdomen.' }, // Relaxation
+            { id: 4, type: 'safe', subtype: 'forfeit', label_en: 'Ancient Tree', label_es: 'Árbol Anciano', content_en: 'Hop on one foot 5 times.', content_es: 'Salta 5 veces en un solo pie.' },
+            { id: 5, type: 'challenge', label_en: 'Name It!', label_es: '¡Nómbralo!', content_en: 'Pause and notice any strong feelings inside. Can you name the emotion? (e.g., "I feel frustrated," "I feel excited"). Just naming it can help!', content_es: 'Pausa y nota cualquier sentimiento fuerte en tu interior. ¿Puedes nombrar la emoción? (ej., "Me siento frustrado/a", "Me siento emocionado/a"). ¡Solo nombrarla puede ayudar!' }, // Acceptance
+            { id: 6, type: 'safe', subtype: 'tongue_twister', label_en: 'Winding River', label_es: 'Río Sinuoso', content_en: 'She sells seashells by the seashore.', content_es: 'Tres tristes tigres tragaban trigo en un trigal.' },
+            { id: 7, type: 'safe', subtype: 'joke', label_en: 'Vine Bridge', label_es: 'Puente de Lianas', content_en: 'What do you call a lazy kangaroo? Pouch potato!', content_es: '¿Por qué el espantapájaros ganó un premio? ¡Porque era sobresaliente en su campo!' },
+            { id: 8, type: 'challenge', label_en: 'Flip the Script', label_es: 'Cambia el Guion', content_en: 'Think of a recent time you had a negative thought (e.g., "I\'ll never get this right"). How could you reframe it more helpfully? (e.g., "This is tricky, but I can try again or ask for help").', content_es: 'Piensa en una vez reciente que tuviste un pensamiento negativo (ej., "Nunca lo haré bien"). ¿Cómo podrías replantearlo de forma más útil? (ej., "Esto es difícil, pero puedo intentarlo de nuevo o pedir ayuda").' }, // Reframing
+            { id: 9, type: 'safe', subtype: 'forfeit', label_en: 'Hidden Waterfall', label_es: 'Cascada Oculta', content_en: 'Pat your head and rub your tummy at the same time.', content_es: 'Date palmaditas en la cabeza y frótate la barriga al mismo tiempo.' },
+            { id: 10, type: 'challenge', label_en: 'Talk it Out', label_es: 'Háblalo', content_en: 'Imagine someone accidentally bumped into you. Instead of getting angry, how could you assertively say how you feel? Try: "Ouch, that bumped me. Could you please be more careful?"', content_es: 'Imagina que alguien te golpea sin querer. En lugar de enfadarte, ¿cómo podrías decir asertivamente cómo te sientes? Intenta: "Ay, eso me golpeó. ¿Podrías tener más cuidado, por favor?"' }, // Assertive Action Plan (Simple)
+            { id: 11, type: 'safe', subtype: 'tongue_twister', label_en: 'Monkey Grove', label_es: 'Arboleda de Monos', content_en: 'Peter Piper picked a peck of pickled peppers.', content_es: 'Pablito clavó un clavito, ¿qué clavito clavó Pablito?' },
+            { id: 12, type: 'challenge', label_en: 'Body Scan', label_es: 'Escaneo Corporal', content_en: 'Close your eyes for a moment. Where do you feel tension in your body? Shoulders? Jaw? Try to relax that area with a gentle breath out.', content_es: 'Cierra los ojos un momento. ¿Dónde sientes tensión en tu cuerpo? ¿Hombros? ¿Mandíbula? Intenta relajar esa zona con una exhalación suave.' }, // Relaxation
+            { id: 13, type: 'safe', subtype: 'joke', label_en: 'Sunlit Path', label_es: 'Sendero Soleado', content_en: 'Why did the bicycle fall over? Because it was two tired!', content_es: '¿Cuál es el último animal que subió al arca de Noé? El del-fín.' },
+            { id: 14, type: 'challenge', label_en: 'Feelings Check-In', label_es: 'Revisión de Sentimientos', content_en: 'Think about your day so far. What\'s one pleasant feeling you had? What\'s one unpleasant one? It\'s okay to have both!', content_es: 'Piensa en tu día hasta ahora. ¿Qué sentimiento agradable tuviste? ¿Y uno desagradable? ¡Está bien tener ambos!' }, // Acceptance
+            { id: 15, type: 'safe', subtype: 'forfeit', label_en: 'Echoing Canyon', label_es: 'Cañón Resonante', content_en: 'Try to touch your nose with your tongue.', content_es: 'Intenta tocarte la nariz con la lengua.' },
+            { id: 16, type: 'safe', subtype: 'tongue_twister', label_en: 'Giant Flowers', label_es: 'Flores Gigantes', content_en: 'How much wood would a woodchuck chuck if a woodchuck could chuck wood?', content_es: 'El perro de San Roque no tiene rabo porque Ramón Ramírez se lo ha robado.' },
+            { id: 17, type: 'challenge', label_en: 'Problem Solver', label_es: 'Solucionador', content_en: 'Think of a small problem you faced recently. What\'s one helpful step you took or could take to solve it? (e.g., Ask for help, break it down, take a break).', content_es: 'Piensa en un pequeño problema que enfrentaste recientemente. ¿Qué paso útil diste o podrías dar para resolverlo? (ej., Pedir ayuda, dividirlo, tomar un descanso).' }, // Assertive Action Plan (Problem Solving)
+            { id: 18, type: 'safe', subtype: 'joke', label_en: 'Crystal Cave', label_es: 'Cueva de Cristal', content_en: 'What musical instrument is found in the bathroom? A tuba toothpaste!', content_es: '¿Qué hace una abeja en el gimnasio? ¡Zumba!' },
+            { id: 19, type: 'challenge', label_en: 'Positive Reframe', label_es: 'Reencuadre Positivo', content_en: 'Someone disagrees with your idea. Instead of thinking "They hate it," try "They have a different perspective. I can listen to understand why."', content_es: 'Alguien no está de acuerdo con tu idea. En lugar de pensar "La odian", intenta "Tienen una perspectiva diferente. Puedo escuchar para entender por qué."' }, // Reframing
+            { id: 20, type: 'safe', subtype: 'forfeit', label_en: 'Mysterious Ruins', label_es: 'Ruinas Misteriosas', content_en: 'Sing your favorite song snippet loudly.', content_es: 'Canta un trozo de tu canción favorita en voz alta.' },
+            { id: 21, type: 'challenge', label_en: 'Mindful Moment', label_es: 'Momento Consciente', content_en: 'Focus on one sound you can hear right now for 10 seconds. Just listen without judging it. This helps calm a busy mind.', content_es: 'Concéntrate en un sonido que puedas oír ahora mismo durante 10 segundos. Solo escucha sin juzgarlo. Esto ayuda a calmar una mente agitada.' }, // Relaxation
+            { id: 22, type: 'safe', subtype: 'tongue_twister', label_en: 'Glowing Mushrooms', label_es: 'Hongos Brillantes', content_en: 'Red lorry, yellow lorry.', content_es: 'Erre con erre guitarra, erre con erre barril.' },
+            { id: 23, type: 'challenge', label_en: 'Express Yourself', label_es: 'Exprésate', content_en: 'Imagine you need help with homework. How can you ask assertively? Try: "I\'m finding this part difficult. Could you help me understand it?"', content_es: 'Imagina que necesitas ayuda con la tarea. ¿Cómo puedes pedirla asertivamente? Intenta: "Esta parte me resulta difícil. ¿Podrías ayudarme a entenderla?"' }, // Assertive Action Plan (Asking for Help)
+            { id: 24, type: 'safe', subtype: 'joke', label_en: 'Whispering Reeds', label_es: 'Juncos Susurrantes', content_en: 'Why did the teddy bear say no to dessert? Because she was stuffed!', content_es: '¿Cómo se dice pañuelo en japonés? Saka-moko.' },
+            { id: 25, type: 'challenge', label_en: 'Accepting Discomfort', label_es: 'Aceptar la Incomodidad', content_en: 'Sometimes we feel uncomfortable (like nervous or bored). Can you sit with that feeling for a moment without trying to push it away? Just notice it like a passing cloud.', content_es: 'A veces nos sentimos incómodos (como nerviosos o aburridos). ¿Puedes quedarte con ese sentimiento un momento sin intentar alejarlo? Solo obsérvalo como una nube pasajera.' }, // Acceptance
+            { id: 26, type: 'safe', subtype: 'forfeit', label_en: 'Stepping Stones', label_es: 'Piedras de Paso', content_en: 'Say the alphabet backward quickly.', content_es: 'Di el alfabeto al revés rápidamente.' },
+            { id: 27, type: 'challenge', label_en: 'Helpful Thoughts', label_es: 'Pensamientos Útiles', content_en: 'You made a mistake. Instead of thinking "I\'m so clumsy," try "Mistakes happen. What can I learn from this?"', content_es: 'Cometiste un error. En lugar de pensar "Soy tan torpe", intenta "Los errores ocurren. ¿Qué puedo aprender de esto?"' }, // Reframing
+            { id: 28, type: 'safe', subtype: 'tongue_twister', label_en: 'Sacred Spring', label_es: 'Manantial Sagrado', content_en: 'I scream, you scream, we all scream for ice cream!', content_es: 'El cielo está enladrillado, ¿quién lo desenladrillará?' },
+            { id: 29, type: 'safe', subtype: 'forfeit', label_en: 'Final Climb', label_es: 'Subida Final', content_en: 'Make a funny face and hold it for 5 seconds.', content_es: 'Haz una cara graciosa y mantenla por 5 segundos.' },
+            { id: 30, type: 'end', label_en: 'Finish Line!', label_es: '¡Meta!', content_en: 'You\'ve reached the end!', content_es: '¡Has llegado al final!' }
+        ];
+
+        // Language Text Data
+        const uiText = {
+            en: {
+                gameTitle: "Emotional Journey",
+                gameSubtitle: "Emotional Regulation Adventure",
+                playerSelectTitle: "Choose Number of Players",
+                playersUnit: "Players",
+                currentPlayerTitle: "Current Turn",
+                dicePromptInitial: "Click the dice to roll!",
+                dicePromptTurn: "Player {playerNum}, click the dice to roll!",
+                diceRolling: "Rolling...",
+                diceResult: "Rolled a {roll}!",
+                challengeTitleDefault: "Challenge!",
+                safeSquareTitle: "Surprise!", // Title for fun square modals
+                modalDoneButton: "Done",
+                victoryTitle: "Player {playerNum} Wins!",
+                victoryMessage: "Congratulations on completing the Emotional Journey!",
+                playAgain: "Play Again?",
+                toggleLang: "Switch to Spanish",
+                playerName: "Player {playerNum}",
+                 // Add aria labels if needed
+                 boardAriaLabel: "Game Board",
+                 squareAriaLabel: "Square {squareNum}: {squareLabel}",
+                 diceAriaLabel: "Roll the dice",
+                 playerPieceAriaLabel: "Player {playerNum} piece"
+            },
+            es: {
+                gameTitle: "Aventura Emocional",
+                gameSubtitle: "Aventura de Regulación Emocional",
+                playerSelectTitle: "Elige Número de Jugadores",
+                playersUnit: "Jugadores",
+                currentPlayerTitle: "Turno Actual",
+                dicePromptInitial: "¡Haz clic en el dado para lanzar!",
+                dicePromptTurn: "Jugador {playerNum}, ¡haz clic en el dado para lanzar!",
+                diceRolling: "Lanzando...",
+                diceResult: "¡Sacaste un {roll}!",
+                challengeTitleDefault: "¡Desafío!",
+                safeSquareTitle: "¡Sorpresa!", // Title for fun square modals
+                modalDoneButton: "Hecho",
+                victoryTitle: "¡Jugador {playerNum} Gana!",
+                victoryMessage: "¡Felicidades por completar la Aventura Emocional!",
+                playAgain: "¿Jugar de Nuevo?",
+                toggleLang: "Switch to English",
+                playerName: "Jugador {playerNum}",
+                 // Add aria labels if needed
+                 boardAriaLabel: "Tablero de Juego",
+                 squareAriaLabel: "Casilla {squareNum}: {squareLabel}",
+                 diceAriaLabel: "Lanzar el dado",
+                 playerPieceAriaLabel: "Pieza del Jugador {playerNum}"
+            }
+        };
+
+
+        // Simulate /js/game.js
+
+        // --- DOM Elements ---
+        const boardElement = document.getElementById('board');
+        const playerSetupElement = document.getElementById('player-setup');
+        const playerInfoElement = document.getElementById('player-info');
+        const playerListElement = document.getElementById('player-list');
+        const diceAreaElement = document.getElementById('dice-area');
+        const diceElement = document.getElementById('dice');
+        const diceCubeElement = document.getElementById('dice-cube');
+        const diceResultElement = document.getElementById('dice-result');
+        const modalElement = document.getElementById('challenge-modal');
+        const modalBoxContentElement = document.getElementById('modal-box-content'); // Get the modal content box
+        const modalTitleElement = document.getElementById('modal-title');
+        const modalContentElement = document.getElementById('modal-content-text');
+        const modalDoneButton = document.getElementById('modal-done-button');
+        const victoryMessageElement = document.getElementById('victory-message');
+        const winnerNameElement = document.getElementById('winner-name');
+        const playAgainButton = document.getElementById('play-again-button');
+        const langToggleButton = document.getElementById('lang-toggle-button');
+        const bodyElement = document.body; // To update page lang attribute
+
+        // --- Game State ---
+        let numPlayers = 0;
+        let players = []; // { id: 0, name: 'Player 1', position: 0, pieceElement: null }
+        let currentPlayerIndex = 0;
+        let boardSquares = []; // Will hold references to square DOM elements
+        let isRolling = false; // Prevent multiple rolls
+        let isModalOpen = false; // Track modal state
+        let currentLanguage = 'en'; // Default language
+
+        // --- Constants ---
+        const MAX_SQUARES = 30;
+        // Placeholder image URLs - REPLACE WITH YOUR /assets/images/ URLs
+        const PLAYER_TOKEN_URLS = [
+            '/images/red-token.png', // Dark Red
+            '/images/blue-token.png', // Dark Blue
+            '/images/yellow-token.png', // Dark Goldenrod
+            '/images/green-token.png'  // Dark Olive Green
+            /* Example actual paths:
+            '/assets/images/token-red.png',
+            '/assets/images/token-blue.png',
+            '/assets/images/token-yellow.png',
+            '/assets/images/token-green.png'
+            */
+        ];
+
+        // --- Language Functions ---
+
+        /**
+         * Toggles the game language between English and Spanish.
+         */
+        function toggleLanguage() {
+            currentLanguage = (currentLanguage === 'en') ? 'es' : 'en';
+            bodyElement.lang = currentLanguage; // Update page language attribute
+            updateUIText();
+            // If modal is open when language changes, update its content too
+            if (isModalOpen) {
+                // Find the square data corresponding to the current player's position
+                const currentPlayer = players[currentPlayerIndex];
+                if (currentPlayer && currentPlayer.position > 0 && currentPlayer.position <= MAX_SQUARES) {
+                    const squareData = squaresData[currentPlayer.position - 1];
+                    const titleKey = squareData.type === 'challenge' ? 'challengeTitleDefault' : 'safeSquareTitle';
+                    const title = squareData[`label_${currentLanguage}`] || uiText[currentLanguage][titleKey];
+                    const content = squareData[`content_${currentLanguage}`] || '';
+                    showModal(title, content, squareData.type); // Reshow modal with updated text
+                }
+            }
+        }
+
+        /**
+         * Updates all text elements in the UI to the current language.
+         */
+        function updateUIText() {
+            const langTexts = uiText[currentLanguage];
+
+            document.title = langTexts.gameTitle; // Update page title
+
+            // Update all elements with data-lang-key attribute
+            document.querySelectorAll('[data-lang-key]').forEach(element => {
+                const key = element.dataset.langKey;
+                if (langTexts[key]) {
+                    // Handle potential placeholders in text (basic implementation)
+                    let text = langTexts[key];
+                    // Avoid replacing placeholders if not needed yet
+                    if (!text.includes('{playerNum}') && !text.includes('{roll}')) {
+                        element.textContent = text;
+                    } else if (key === 'dicePromptInitial' && players.length === 0) {
+                         element.textContent = text; // Set initial prompt before game starts
+                    }
+                }
+            });
+
+            // Update player names in the list (if game started)
+            if (players.length > 0) {
+                 updatePlayerInfo(); // This will re-render names with current lang
+            }
+
+
+            // Update square labels on the board
+            boardSquares.forEach((square, index) => {
+                const squareData = squaresData[index];
+                const labelElement = square.querySelector('span:last-child');
+                const ariaLabel = langTexts.squareAriaLabel
+                                    .replace('{squareNum}', squareData.id)
+                                    .replace('{squareLabel}', squareData[`label_${currentLanguage}`]);
+                if (labelElement) {
+                    labelElement.textContent = squareData[`label_${currentLanguage}`];
+                }
+                 square.setAttribute('aria-label', ariaLabel);
+            });
+
+             // Update dice prompt if game has started
+             if (players.length > 0 && !isRolling && !isModalOpen) {
+                 updateDicePrompt();
+             }
+
+             // Update ARIA labels
+             boardElement.setAttribute('aria-label', langTexts.boardAriaLabel);
+             diceElement.setAttribute('aria-label', langTexts.diceAriaLabel);
+
+             // Update language toggle button text AFTER updating other elements
+             langToggleButton.textContent = langTexts.toggleLang;
+        }
+
+
+        // --- Game Logic Functions ---
+
+        /**
+         * Initializes the game board by creating square elements.
+         */
+        function createBoard() {
+            boardElement.innerHTML = ''; // Clear previous board
+            boardSquares = []; // Reset square references
+            const langTexts = uiText[currentLanguage];
+
+            for (let i = 0; i < MAX_SQUARES; i++) {
+                const squareData = squaresData[i];
+                const square = document.createElement('div');
+                square.classList.add('square');
+                square.setAttribute('role', 'gridcell');
+                square.dataset.squareId = squareData.id; // Store 1-based ID
+
+                // Add square number and label (in current language)
+                const numberSpan = document.createElement('span');
+                numberSpan.textContent = squareData.id;
+                const labelSpan = document.createElement('span');
+                labelSpan.textContent = squareData[`label_${currentLanguage}`]; // Use current lang
+
+                 // Set ARIA label
+                 const ariaLabel = langTexts.squareAriaLabel
+                                     .replace('{squareNum}', squareData.id)
+                                     .replace('{squareLabel}', squareData[`label_${currentLanguage}`]);
+                 square.setAttribute('aria-label', ariaLabel);
+
+
+                square.appendChild(numberSpan);
+                square.appendChild(labelSpan);
+
+
+                if (squareData.type === 'start') square.classList.add('start-square');
+                if (squareData.type === 'end') square.classList.add('end-square');
+                if (squareData.type === 'challenge') square.classList.add('challenge-square');
+                // Add class if safe square has content
+                if (squareData.type === 'safe' && squareData[`content_${currentLanguage}`]) {
+                    square.classList.add('safe-square-content');
+                }
+
+
+                // Add placeholder background - replace with actual image logic if needed
+                // square.style.backgroundImage = `url('https://placehold.co/100x100/F5F5DC/6B4423?text=${squareData.id}')`;
+                // square.style.backgroundSize = 'cover';
+
+                boardElement.appendChild(square);
+                boardSquares.push(square); // Store reference
+            }
+        }
+
+        /**
+         * Sets up the game with the selected number of players.
+         * @param {number} count - Number of players (2-4).
+         */
+        function setupGame(count) {
+            numPlayers = count;
+            players = [];
+            playerListElement.innerHTML = ''; // Clear player list
+
+            for (let i = 0; i < numPlayers; i++) {
+                 const playerName = uiText[currentLanguage].playerName.replace('{playerNum}', i + 1);
+                 const playerAriaLabel = uiText[currentLanguage].playerPieceAriaLabel.replace('{playerNum}', i + 1);
+                const player = {
+                    id: i,
+                    name: playerName,
+                    position: 0, // 0 represents off-board/start
+                    pieceElement: createPlayerPiece(i, playerAriaLabel) // Now creates an <img>
+                };
+                players.push(player);
+
+                // Add player to info list (will be updated by updatePlayerInfo)
+                const li = document.createElement('li');
+                li.dataset.playerId = i;
+                // Icon span will be added by updatePlayerInfo
+                const nameSpan = document.createElement('span');
+                 // nameSpan will be populated by updatePlayerInfo
+                li.appendChild(nameSpan); // Add name span initially
+                playerListElement.appendChild(li);
+
+
+                // Add piece to the board (initially off-board visually, handled by movePlayerPiece)
+                 movePlayerPiece(player, 0); // Place at start visually
+            }
+
+            currentPlayerIndex = 0;
+            updatePlayerInfo(); // Updates names and highlights
+            updateDicePrompt(); // Set initial dice prompt for Player 1
+
+            // Hide setup, show game elements
+            playerSetupElement.style.display = 'none';
+            playerInfoElement.style.display = 'block';
+            diceAreaElement.style.display = 'flex'; // Use flex for alignment
+            boardElement.style.display = 'grid'; // Ensure board is visible
+            victoryMessageElement.style.display = 'none';
+            isRolling = false;
+        }
+
+        /**
+         * Creates a DOM element (image) for a player's piece.
+         * @param {number} playerId - The ID (index) of the player.
+         * @param {string} ariaLabel - The accessible label for the piece.
+         * @returns {HTMLImageElement} The created image element.
+         */
+        function createPlayerPiece(playerId, ariaLabel) {
+            const piece = document.createElement('img'); // Use <img> tag
+            piece.classList.add('player-piece');
+            piece.dataset.player = playerId;
+            piece.src = PLAYER_TOKEN_URLS[playerId]; // Set image source
+            piece.alt = ariaLabel; // Use translated alt text
+            // Add error handling for broken images
+            piece.onerror = () => {
+                console.error(`Failed to load token for Player ${playerId + 1}`);
+                piece.alt = `Error loading token for ${ariaLabel}`; // Update alt text
+                // Optional: Style the broken image or show fallback text/color
+                piece.style.border = '2px solid red';
+                 piece.src = `https://placehold.co/40x40/ccc/000?text=Err`; // Simple fallback
+            };
+            // Append piece to the board container initially, will be moved to squares
+            boardElement.appendChild(piece);
+            return piece;
+        }
+
+
+        /**
+         * Updates the player info panel to highlight the current player and show correct names/icons.
+         */
+        function updatePlayerInfo() {
+            const items = playerListElement.querySelectorAll('li');
+            const langTexts = uiText[currentLanguage];
+
+            items.forEach((item, index) => {
+                const playerId = parseInt(item.dataset.playerId, 10);
+                 if (playerId >= players.length) return; // Avoid errors if called before players are fully set up
+
+                const player = players[playerId];
+                 const playerName = langTexts.playerName.replace('{playerNum}', playerId + 1);
+                 player.name = playerName; // Update player object name
+
+                 // Ensure icon exists or create it
+                 let iconSpan = item.querySelector('.player-token-icon');
+                 if (!iconSpan) {
+                     iconSpan = document.createElement('span');
+                     iconSpan.classList.add('player-token-icon');
+                     item.prepend(iconSpan); // Add icon before name
+                 }
+                 // Style the icon span with the player's token image as background
+                 iconSpan.style.backgroundImage = `url('${PLAYER_TOKEN_URLS[playerId]}')`;
+                 iconSpan.style.backgroundSize = 'cover';
+
+
+                 // Update name span text
+                 const nameSpan = item.querySelector('span:not(.player-token-icon)');
+                 if (nameSpan) {
+                    nameSpan.textContent = playerName;
+                 }
+
+
+                if (index === currentPlayerIndex) {
+                    item.classList.add('active-player');
+                    item.setAttribute('aria-current', 'true');
+                } else {
+                    item.classList.remove('active-player');
+                    item.removeAttribute('aria-current');
+                }
+            });
+        }
+
+         /**
+         * Updates the dice prompt text based on the current player and language.
+         */
+        function updateDicePrompt() {
+             if (players.length === 0) return; // Game not started
+             const langTexts = uiText[currentLanguage];
+             const promptText = langTexts.dicePromptTurn.replace('{playerNum}', currentPlayerIndex + 1);
+             diceResultElement.textContent = promptText;
+         }
+
+        /**
+         * Rolls the dice, animates it, and triggers player movement.
+         */
+        function rollDice() {
+            if (isRolling || isModalOpen) return; // Prevent rolling if busy or modal is open
+            isRolling = true;
+            diceResultElement.textContent = uiText[currentLanguage].diceRolling; //'Rolling...';
+            diceCubeElement.classList.add('rolling');
+
+            // Calculate random rotation for visual variety
+             const randomX = Math.floor(Math.random() * 8 + 4) * 360; // 4-11 full rotations
+             const randomY = Math.floor(Math.random() * 8 + 4) * 360;
+             const randomZ = Math.floor(Math.random() * 8 + 4) * 360;
+
+             // Apply initial rolling transform
+             diceCubeElement.style.transform = `rotateX(${randomX}deg) rotateY(${randomY}deg) rotateZ(${randomZ}deg)`;
+
+
+            // Wait for animation to roughly finish
+            setTimeout(() => {
+                const roll = Math.floor(Math.random() * 6) + 1;
+                const resultText = uiText[currentLanguage].diceResult.replace('{roll}', roll);
+                diceResultElement.textContent = resultText; // `Rolled a ${roll}!`
+
+                 // Stop animation class and set final orientation to show the rolled face
+                 diceCubeElement.classList.remove('rolling');
+                 setDiceFace(roll); // Set final visual state of the dice
+
+
+                // Get current player and move them
+                const currentPlayer = players[currentPlayerIndex];
+                let newPosition = currentPlayer.position + roll;
+
+                // Check for win condition (exact landing or overshoot)
+                if (newPosition >= MAX_SQUARES) {
+                    newPosition = MAX_SQUARES;
+                    movePlayerPiece(currentPlayer, newPosition);
+                    endGame(currentPlayer);
+                } else {
+                    movePlayerPiece(currentPlayer, newPosition);
+                    // Check square type after moving
+                    checkSquareAction(currentPlayer);
+                    // Only switch turn if no modal pops up
+                    if (!isModalOpen) {
+                       nextTurn();
+                    } else {
+                        // If modal opened, rolling is finished but turn doesn't switch yet
+                        isRolling = false;
+                    }
+                }
+                 // Re-enable rolling slightly after result display ONLY IF game not ended and modal not open
+                 if (!isModalOpen && currentPlayer.position < MAX_SQUARES) {
+                    setTimeout(() => { isRolling = false; }, 300);
+                 }
+
+
+            }, 1000); // Match CSS transition duration
+        }
+
+         /**
+         * Sets the dice cube's rotation to show the specified face number front.
+         * @param {number} roll - The number rolled (1-6).
+         */
+         function setDiceFace(roll) {
+             let xRot = 0, yRot = 0, zRot = 0; // Added zRot for potential refinement
+             // Define rotations to bring each face to the front
+             switch (roll) {
+                 case 1: xRot = 0; yRot = 0; break;        // Face 1 (front)
+                 case 2: xRot = 0; yRot = -90; break;     // Face 2 (right) -> front
+                 case 3: xRot = -90; yRot = 0; break;     // Face 3 (top) -> front
+                 case 4: xRot = 90; yRot = 0; break;      // Face 4 (bottom) -> front
+                 case 5: xRot = 0; yRot = 90; break;      // Face 5 (left) -> front
+                 case 6: xRot = 0; yRot = 180; break;     // Face 6 (back) -> front
+             }
+              // Apply a non-animated transform immediately to show the result face
+             diceCubeElement.style.transition = 'none'; // Disable transition temporarily
+             diceCubeElement.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) rotateZ(${zRot}deg)`;
+             // Force reflow might be needed in some browsers
+             void diceCubeElement.offsetWidth;
+             // Re-enable transition for the next roll animation
+             diceCubeElement.style.transition = 'transform 1s ease-out';
+         }
+
+
+        /**
+         * Moves a player's piece (image) to a new square on the board.
+         * @param {object} player - The player object.
+         * @param {number} newPosition - The 1-based ID of the target square.
+         */
+        function movePlayerPiece(player, newPosition) {
+            player.position = newPosition;
+            const piece = player.pieceElement;
+
+            // Find the target square element
+             const targetSquare = boardSquares[newPosition > 0 ? newPosition - 1 : 0];
+
+            if (targetSquare) {
+                 // Append the piece to the target square for positioning context
+                 targetSquare.appendChild(piece);
+                 // Use CSS styles for positioning within the square (top/left/right/bottom)
+                 // The specific offsets are handled by CSS rules like .player-piece[data-player="0"]
+                 piece.style.position = 'absolute'; // Ensure it's absolute within the square
+                 piece.style.left = ''; // Clear direct positioning if switching squares
+                 piece.style.top = '';
+            } else if (newPosition === 0) {
+                 // If moving back to start (or initial placement), place near square 1
+                 const firstSquare = boardSquares[0];
+                 if (firstSquare) {
+                     // Position relative to the board container, near the first square
+                     boardElement.appendChild(piece); // Ensure it's child of board
+                     const boardRect = boardElement.getBoundingClientRect();
+                     const squareRect = firstSquare.getBoundingClientRect();
+                     // Adjust offsets based on player ID for slight separation at start
+                     const pieceSize = piece.offsetWidth || 20; // Approx size for calc
+                     const offsetX = (player.id % 2) * (pieceSize * 0.6) - (pieceSize * 0.3);
+                     const offsetY = Math.floor(player.id / 2) * (pieceSize * 0.6) - (pieceSize * 0.3);
+
+                     piece.style.position = 'absolute'; // Need absolute for board-relative
+                     piece.style.left = `${squareRect.left - boardRect.left + offsetX}px`;
+                     piece.style.top = `${squareRect.top - boardRect.top + offsetY}px`;
+                 }
+            }
+             // console.log(`${player.name} moved to square ${newPosition}`);
+        }
+
+
+        /**
+         * Checks the type of square the player landed on and triggers actions.
+         * @param {object} player - The player who just moved.
+         */
+        function checkSquareAction(player) {
+             if (player.position <= 0 || player.position > MAX_SQUARES) return; // Invalid position
+
+            const squareData = squaresData[player.position - 1]; // Get data for the current square
+            const content = squareData[`content_${currentLanguage}`];
+
+            if (content) { // Check if there's any content for the current language
+                let title = '';
+                let modalType = squareData.type; // 'challenge' or 'safe'
+
+                if (modalType === 'challenge') {
+                    title = squareData[`label_${currentLanguage}`] || uiText[currentLanguage].challengeTitleDefault;
+                } else if (modalType === 'safe') {
+                    title = uiText[currentLanguage].safeSquareTitle; // Use "Surprise!" title
+                }
+
+                if (title) { // Only show modal if there's a title and content
+                    showModal(title, content, modalType);
+                } else if (modalType !== 'start' && modalType !== 'end') {
+                    // If it's a safe square without specific content/title, just proceed
+                     nextTurn();
+                }
+
+            } else if (squareData.type !== 'start' && squareData.type !== 'end') {
+                 // If no content for this square type (and not start/end), proceed to next turn
+                 nextTurn();
+            }
+             // Start and End squares do nothing extra here
+        }
+
+        /**
+         * Shows the challenge/fun modal with specific content in the current language.
+         * @param {string} title - The title for the modal.
+         * @param {string} content - The text content for the modal.
+         * @param {string} type - The type of square ('challenge' or 'safe') to style the modal.
+         */
+        function showModal(title, content, type) {
+            isModalOpen = true; // Set flag
+            modalTitleElement.textContent = title;
+            modalContentElement.textContent = content;
+            modalDoneButton.textContent = uiText[currentLanguage].modalDoneButton;
+
+            // Add or remove class for styling based on type
+            if (type === 'safe') {
+                modalBoxContentElement.classList.add('safe-modal');
+            } else {
+                modalBoxContentElement.classList.remove('safe-modal');
+            }
+
+            modalElement.style.display = 'flex'; // Show modal using flex for centering
+            modalDoneButton.focus(); // Set focus to the button for accessibility
+        }
+
+        /**
+         * Hides the challenge modal.
+         */
+        function hideModal() {
+            isModalOpen = false; // Clear flag
+            modalElement.style.display = 'none';
+            diceElement.focus(); // Return focus to the dice
+            // Modal is closed, now proceed to the next turn
+            nextTurn();
+        }
+
+        /**
+         * Advances the game to the next player's turn.
+         */
+        function nextTurn() {
+             if (isModalOpen) return; // Don't switch turns if modal is still open
+             if (players.length === 0) return; // Game hasn't started or already ended
+             if (players[currentPlayerIndex].position >= MAX_SQUARES) return; // Game ended
+
+             // Ensure rolling is false before switching
+             isRolling = false;
+
+            currentPlayerIndex = (currentPlayerIndex + 1) % numPlayers;
+            updatePlayerInfo();
+            updateDicePrompt(); // Update prompt for the new player
+        }
+
+        /**
+         * Ends the game and displays the victory message in the current language.
+         * @param {object} winner - The player who won.
+         */
+        function endGame(winner) {
+            const langTexts = uiText[currentLanguage];
+            const winnerText = langTexts.victoryTitle.replace('{playerNum}', winner.id + 1);
+            winnerNameElement.textContent = winnerText; // Use translated winner name format
+
+            // Update other victory text elements via data-lang-key handled by updateUIText
+            victoryMessageElement.querySelector('p').textContent = langTexts.victoryMessage;
+            playAgainButton.textContent = langTexts.playAgain;
+
+            victoryMessageElement.style.display = 'block';
+            diceAreaElement.style.display = 'none'; // Hide dice
+            playerInfoElement.style.display = 'none'; // Hide player info
+            isRolling = true; // Disable further rolling
+            console.log(`${winner.name} has won the game!`);
+        }
+
+        /**
+         * Resets the game state to allow playing again.
+         */
+        function resetGame() {
+             // Clear player pieces from board
+             players.forEach(player => {
+                 if (player.pieceElement && player.pieceElement.parentNode) {
+                     player.pieceElement.parentNode.removeChild(player.pieceElement);
+                 }
+             });
+
+            // Reset game state variables
+            numPlayers = 0;
+            players = [];
+            currentPlayerIndex = 0;
+            isRolling = false;
+            isModalOpen = false;
+
+            // Reset UI elements to initial language state
+            updateUIText(); // Refresh text based on currentLanguage
+            diceResultElement.textContent = uiText[currentLanguage].dicePromptInitial;
+
+
+            // Show setup, hide game elements
+            playerSetupElement.style.display = 'block';
+            playerInfoElement.style.display = 'none';
+            diceAreaElement.style.display = 'none';
+            victoryMessageElement.style.display = 'none';
+            modalElement.style.display = 'none'; // Ensure modal is hidden
+
+            // Re-create the board for a fresh start
+             createBoard();
+        }
+
+
+        // --- Event Listeners ---
+
+        // Player Setup Buttons
+        playerSetupElement.addEventListener('click', (event) => {
+             // Use closest to handle clicks on the span inside the button
+             const button = event.target.closest('button');
+            if (button && button.dataset.players) {
+                const count = parseInt(button.dataset.players, 10);
+                createBoard(); // Create board squares first
+                setupGame(count); // Then setup players and pieces
+            }
+        });
+
+        // Dice Roll (Click and Keyboard)
+        diceElement.addEventListener('click', rollDice);
+        diceElement.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault(); // Prevent page scroll on space
+                rollDice();
+            }
+        });
+
+        // Modal Done Button
+        modalDoneButton.addEventListener('click', hideModal);
+
+        // Play Again Button
+        playAgainButton.addEventListener('click', resetGame);
+
+        // Language Toggle Button
+        langToggleButton.addEventListener('click', toggleLanguage);
+
+        // Close modal with Escape key
+         document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && isModalOpen) {
+                hideModal();
+            }
+        });
+
+
+        // --- Initial Setup ---
+        // Set initial language and update UI text elements
+        bodyElement.lang = currentLanguage;
+        updateUIText();
+        createBoard(); // Create the board visuals initially
+
+    </script>
+
+</body>
+</html>
